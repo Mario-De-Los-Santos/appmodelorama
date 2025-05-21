@@ -14,7 +14,7 @@ def proveedores_view(page: ft.Page):
     txt_id = ft.TextField(label="ID Proveedor", width=150)
     txt_nombre = ft.TextField(label="Nombre del Proveedor", width=200)
     txt_direccion = ft.TextField(label="Dirección", width=250)
-    txt_telefono = ft.TextField(label="Teléfono", max_length=10, width=150)
+    txt_telefono = ft.TextField(label="Teléfono",max_length=10, width=150)
 
     tabla = ft.DataTable(
         columns=[

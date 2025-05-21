@@ -46,6 +46,10 @@ CREATE TABLE IF NOT EXISTS Producto (
   FOREIGN KEY (idUnidad) REFERENCES Unidad(idUnidad)
 ) ENGINE=InnoDB;
 
+INSERT INTO Producto (codigo, nombre_producto, precio_producto, stock, idCategoria, idUnidad) VALUES
+('7501055310227', 'Coca Cola Retornable', 45.0, 22, 1, 1),
+('7501055377022', 'Senzao Guaraná', 32.0, 15, 1, 1);
+
 -- Tabla Cliente
 CREATE TABLE IF NOT EXISTS Cliente (
   telefono CHAR(10) PRIMARY KEY,
