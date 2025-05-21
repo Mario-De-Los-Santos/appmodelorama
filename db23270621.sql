@@ -11,12 +11,20 @@ CREATE TABLE IF NOT EXISTS Empleado (
   puesto VARCHAR(35)
 ) ENGINE=InnoDB;
 
+INSERT INTO Empleado (idEmpleado, nombre_empleado, apellido_empleado, numero_empleado, puesto)
+VALUES
+(1, 'Mario', 'Ruiz', 9612659586, 'Cajero');
+
 -- Tabla Categoría
 CREATE TABLE IF NOT EXISTS Categoria (
   idCategoria INT PRIMARY KEY,
   nombre_categoria VARCHAR(45),
   descripcion_categoria VARCHAR(45)
 ) ENGINE=InnoDB;
+
+INSERT INTO Categoria (idCategoria, nombre_categoria, descripcion_categoria)
+VALUES
+(1, 'Refrescos', 'Refrescos embotellados');
 
 -- Tabla Unidad
 CREATE TABLE IF NOT EXISTS Unidad (
@@ -57,11 +65,21 @@ CREATE TABLE IF NOT EXISTS Cliente (
   RFC CHAR(13)
 ) ENGINE=InnoDB;
 
+INSERT INTO Cliente (telefono, nombre_cliente, RFC)
+VALUES
+(9612659585, 'Mario De Los Santos', 'F2438689D341W'),
+(9611234567, 'Dorian Marroquín', 'DOA12127Y4JS2');
+
 -- Tabla Método de Pago
 CREATE TABLE IF NOT EXISTS Metodo_Pago (
   idMetodo_pago INT PRIMARY KEY,
   nombre_del_pago VARCHAR(45)
 ) ENGINE=InnoDB;
+
+INSERT INTO Metodo_Pago (idMetodo_pago, nombre_del_pago)
+VALUES
+(1, 'Efectivo'),
+(2, 'Tarjeta');
 
 -- Tabla Venta
 CREATE TABLE IF NOT EXISTS Venta (
@@ -94,6 +112,7 @@ CREATE TABLE IF NOT EXISTS Pedido (
   FOREIGN KEY (codigo) REFERENCES Producto(codigo),
   FOREIGN KEY (idProveedor) REFERENCES Proveedor(idProveedor)
 ) ENGINE=InnoDB;
+
 
 -- Tabla Detalles de Venta
 CREATE TABLE IF NOT EXISTS Detalles_Venta (
