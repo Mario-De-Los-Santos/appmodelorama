@@ -24,6 +24,7 @@ def clientes_view(page: ft.Page):
         rows=[]
     )
 
+    # Función que actualiza la tabla con todos los clientes
     def cargar():
         tabla.rows.clear()
         cursor.execute("SELECT * FROM cliente")
@@ -36,8 +37,10 @@ def clientes_view(page: ft.Page):
             cursor.execute("INSERT INTO cliente VALUES (%s, %s, %s)",
                            (txt_telefono.value, txt_nombre.value, txt_rfc.value))
             conn.commit()
+            txt_telefono.value = ""
+            txt_nombre.value = ""
+            txt_rfc.value = ""
             cargar()
-        page.update()
 
     def buscar(e):
         cursor.execute("SELECT * FROM cliente WHERE telefono = %s", (txt_telefono.value,))
@@ -50,15 +53,19 @@ def clientes_view(page: ft.Page):
     def eliminar(e):
         cursor.execute("DELETE FROM cliente WHERE telefono = %s", (txt_telefono.value,))
         conn.commit()
+        txt_telefono.value = ""
+        txt_nombre.value = ""
+        txt_rfc.value = ""
         cargar()
-        page.update()
 
     def actualizar(e):
         cursor.execute("UPDATE cliente SET nombre_cliente = %s, RFC = %s WHERE telefono = %s",
                        (txt_nombre.value, txt_rfc.value, txt_telefono.value))
         conn.commit()
         cargar()
-        page.update()
+
+    # Cargar al iniciar la vista
+    cargar()
 
     return ft.Column([
         ft.Text("Gestión de Clientes", size=24, weight="bold"),

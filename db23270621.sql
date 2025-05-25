@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS Empleado (
 
 INSERT INTO Empleado (idEmpleado, nombre_empleado, apellido_empleado, numero_empleado, puesto)
 VALUES
-(1, 'Mario', 'Ruiz', 9612659586, 'Cajero');
+(1, 'Mario', 'Ruiz', '9612659586', 'Cajero'),
+(2, 'Angel Fernando Tovar Hernandez','Cajero');
 
 -- Tabla Categoría
 CREATE TABLE IF NOT EXISTS Categoria (
@@ -22,9 +23,13 @@ CREATE TABLE IF NOT EXISTS Categoria (
   descripcion_categoria VARCHAR(45)
 ) ENGINE=InnoDB;
 
+--Insertar registros en Categoria
 INSERT INTO Categoria (idCategoria, nombre_categoria, descripcion_categoria)
 VALUES
-(1, 'Refrescos', 'Refrescos embotellados');
+(1, 'Refrescos', 'Refrescos embotellados'),
+(2, 'Cerveza', 'Cervezas claras y oscuras'),
+(3, 'Licores', 'Licores de todo tipo'),
+(4, 'Sabritas y snacks', 'Sarbitas y snacks de todo tipo');
 
 -- Tabla Unidad
 CREATE TABLE IF NOT EXISTS Unidad (
@@ -40,7 +45,8 @@ INSERT INTO Unidad (idUnidad, tipo_unidad) VALUES
 (4, 'Kilogramo'),
 (5, 'Botella'),
 (6, 'Lata'),
-(7, 'Caja');
+(7, 'Caja'),
+(8, 'Bolsa');
 
 -- Tabla Producto
 CREATE TABLE IF NOT EXISTS Producto (
@@ -54,9 +60,20 @@ CREATE TABLE IF NOT EXISTS Producto (
   FOREIGN KEY (idUnidad) REFERENCES Unidad(idUnidad)
 ) ENGINE=InnoDB;
 
+-- Insertar registros en Producto
 INSERT INTO Producto (codigo, nombre_producto, precio_producto, stock, idCategoria, idUnidad) VALUES
 ('7501055310227', 'Coca Cola Retornable', 45.0, 22, 1, 1),
-('7501055377022', 'Senzao Guaraná', 32.0, 15, 1, 1);
+('7501055377022', 'Senzao Guarana', 32.0, 15, 1, 1)
+('7501064103100', 'Corona Extra', 22.0, 12, 2, 5),
+('7501049928742','Superior', 21.0, 23, 2, 6),
+('7501049967062','Sol Clamato', 25.0, 15, 2, 6),
+('7501061696988', 'Indio', 23.0, 19, 2, 6),
+('7501064196935','Modelo Oscura', 25.0, 32, 2, 6)
+('7501035103124','Tequila 1800 Reposado', 690, 15, 3, 5),
+('7500810024546', 'Chips Fuego', 21, 26, 4, 8),
+('7500478044214', 'Cheetos Bolita', 16.0, 18, 4, 8),
+('7501011143586', 'Cheetos Torciditos', 16.0, 29, 4, 8);
+
 
 -- Tabla Cliente
 CREATE TABLE IF NOT EXISTS Cliente (
@@ -65,10 +82,11 @@ CREATE TABLE IF NOT EXISTS Cliente (
   RFC CHAR(13)
 ) ENGINE=InnoDB;
 
+-- Insertar Registros en Cliente
 INSERT INTO Cliente (telefono, nombre_cliente, RFC)
 VALUES
-(9612659585, 'Mario De Los Santos', 'F2438689D341W'),
-(9611234567, 'Dorian Marroquín', 'DOA12127Y4JS2');
+('9612659585', 'Mario De Los Santos', 'F2438689D341W'),
+('9611234567', 'Dorian Marroquin', 'DOA12127Y4JS2');
 
 -- Tabla Método de Pago
 CREATE TABLE IF NOT EXISTS Metodo_Pago (
@@ -84,7 +102,7 @@ VALUES
 -- Tabla Venta
 CREATE TABLE IF NOT EXISTS Venta (
   idVenta INT PRIMARY KEY,
-  fecha_venta DATETIME,
+  fecha_venta DATE,
   total DECIMAL(10,2),
   idEmpleado INT NOT NULL,
   telefono_cliente CHAR(10) NOT NULL,
@@ -98,9 +116,16 @@ CREATE TABLE IF NOT EXISTS Venta (
 CREATE TABLE IF NOT EXISTS Proveedor (
   idProveedor INT PRIMARY KEY,
   nombre_proveedor VARCHAR(45),
-  direccion_proveedor VARCHAR(45),
-  telefono_proveedor VARCHAR(45)
+  direccion_proveedor VARCHAR(100),
+  telefono_proveedor CHAR(10)
 ) ENGINE=InnoDB;
+
+-- Insertar Registros en Proveedor
+INSERT INTO Proveedor (idProveedor, nombre_proveedor, direccion_proveedor, telefono_proveedor)
+VALUES
+(1, 'Grupo modelo', '5 Avenida Norte Poniente 2730, 29000, Tuxtla Gutierrez, Chiapas', '9616021829'),
+(2, 'Distribuidora Coca-Cola FEMSA','Libramiento Norte Pte 3435, 29020 Tuxtla Gtz, Chiapas', '5515195000'),
+(3, 'Grupo Bimbo', 'Libramiento Norte Pte esquina, C. Torreon No 1229, 29020 Teran, Chiapas', '9626995068');
 
 -- Tabla Pedido
 CREATE TABLE IF NOT EXISTS Pedido (
@@ -113,12 +138,11 @@ CREATE TABLE IF NOT EXISTS Pedido (
   FOREIGN KEY (idProveedor) REFERENCES Proveedor(idProveedor)
 ) ENGINE=InnoDB;
 
-
 -- Tabla Detalles de Venta
 CREATE TABLE IF NOT EXISTS Detalles_Venta (
   idVenta INT,
   codigo CHAR(13),
-  total DECIMAL(10,2),
+  cantidad INT,
   PRIMARY KEY (idVenta, codigo),
   FOREIGN KEY (idVenta) REFERENCES Venta(idVenta),
   FOREIGN KEY (codigo) REFERENCES Producto(codigo)

@@ -53,6 +53,8 @@ def categorias_view(page: ft.Page):
         cargar()
         page.update()
 
+    cargar()
+    
     return ft.Column([
         ft.Text("Categorías de Productos", size=24, weight="bold"),
         ft.Row([id_categoria, nombre_categoria, descripcion_categoria], spacing=10),
