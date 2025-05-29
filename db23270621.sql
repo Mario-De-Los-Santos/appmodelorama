@@ -112,7 +112,7 @@ VALUES
 
 -- Tabla Venta
 CREATE TABLE IF NOT EXISTS Venta (
-  idVenta INT AUTO_INCREMENT PRIMARY KEY,
+  idVenta INT PRIMARY KEY,
   fecha_venta DATE,
   total DECIMAL(10,2),
   idEmpleado INT NOT NULL,
