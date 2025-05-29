@@ -29,7 +29,8 @@ VALUES
 (1, 'Refrescos', 'Refrescos embotellados'),
 (2, 'Cerveza', 'Cervezas claras y oscuras'),
 (3, 'Licores', 'Licores de todo tipo'),
-(4, 'Sabritas y snacks', 'Sarbitas y snacks de todo tipo');
+(4, 'Sabritas y snacks', 'Sarbitas y snacks de todo tipo'),
+(5, 'Salsas', 'Salsas picantes para botanas');
 
 -- Tabla Unidad
 CREATE TABLE IF NOT EXISTS Unidad (
@@ -65,14 +66,24 @@ INSERT INTO Producto (codigo, nombre_producto, precio_producto, stock, idCategor
 ('7501055310227', 'Coca Cola Retornable', 45.0, 22, 1, 1),
 ('7501055377022', 'Senzao Guarana', 32.0, 15, 1, 1)
 ('7501064103100', 'Corona Extra', 22.0, 12, 2, 5),
-('7501049928742','Superior', 21.0, 23, 2, 6),
-('7501049967062','Sol Clamato', 25.0, 15, 2, 6),
+('7501049928742', 'Superior', 21.0, 23, 2, 6),
+('7501049967062', 'Sol Clamato', 25.0, 15, 2, 6),
 ('7501061696988', 'Indio', 23.0, 19, 2, 6),
-('7501064196935','Modelo Oscura', 25.0, 32, 2, 6)
-('7501035103124','Tequila 1800 Reposado', 690, 15, 3, 5),
+('7501064196935', 'Modelo Oscura', 25.0, 32, 2, 6),
+('7501035103124', 'Tequila 1800 Reposado', 690, 15, 3, 5),
 ('7500810024546', 'Chips Fuego', 21, 26, 4, 8),
 ('7500478044214', 'Cheetos Bolita', 16.0, 18, 4, 8),
-('7501011143586', 'Cheetos Torciditos', 16.0, 29, 4, 8);
+('7501011143586', 'Cheetos Torciditos', 16.0, 29, 4, 8),
+('5410316950527', 'Vodka Smirnoff X1 Tamarindo', 355.0, 30, 3, 5),
+('7501035042322', 'Tequila José Cuervo Silver 750 ml', 199.0, 15, 3, 5),
+('7501145214138', 'Tequila Antiguo Herradura 700 ml', 359.0, 22, 3, 5),
+('0097339000054', 'Salsa Valentina Picante 370 ml', 24.00, 40, 5, 5),
+('0097339000061', 'Salsa Valentina Negra 370 ml', 24.00, 30, 5, 5),
+('7501064190124', 'Corona Light 355 ml', 22.0, 23, 2, 6),
+('7501011101456', 'Papas Sabritas Sal 45 g', 25.00, 15, 4, 8),
+('7501011133921', 'Papas Sabritas Adobadas 170 g', 55.70, 12, 4, 8),
+('7501064190414', 'Pacífico Clara 355 ml', 22.0, 23, 2, 6),
+('7501064195310', 'Victoria Lata 355 ml', 21.0, 33, 2, 6);
 
 
 -- Tabla Cliente
