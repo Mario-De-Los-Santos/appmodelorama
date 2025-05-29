@@ -14,22 +14,22 @@ CREATE TABLE IF NOT EXISTS Empleado (
 INSERT INTO Empleado (idEmpleado, nombre_empleado, apellido_empleado, numero_empleado, puesto)
 VALUES
 (1, 'Mario', 'Ruiz', '9612659586', 'Cajero'),
-(2, 'Angel Fernando Tovar Hernandez','Cajero');
+(2, 'Angel Fernando', 'Tovar Hernandez', '9612345678', 'Cajero');
 
 -- Tabla Categoría
-CREATE TABLE IF NOT EXISTS Categoria (
+CREATE TABLE IF NOT EXISTS categoria (
   idCategoria INT PRIMARY KEY,
   nombre_categoria VARCHAR(45),
   descripcion_categoria VARCHAR(45)
 ) ENGINE=InnoDB;
 
---Insertar registros en Categoria
-INSERT INTO Categoria (idCategoria, nombre_categoria, descripcion_categoria)
-VALUES
+
+-- Insertar registros en Categoria
+INSERT INTO categoria (idCategoria, nombre_categoria, descripcion_categoria) VALUES
 (1, 'Refrescos', 'Refrescos embotellados'),
 (2, 'Cerveza', 'Cervezas claras y oscuras'),
 (3, 'Licores', 'Licores de todo tipo'),
-(4, 'Sabritas y snacks', 'Sarbitas y snacks de todo tipo'),
+(4, 'Sabritas y snacks', 'Sabritas y snacks de todo tipo'),
 (5, 'Salsas', 'Salsas picantes para botanas');
 
 -- Tabla Unidad
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS Producto (
 -- Insertar registros en Producto
 INSERT INTO Producto (codigo, nombre_producto, precio_producto, stock, idCategoria, idUnidad) VALUES
 ('7501055310227', 'Coca Cola Retornable', 45.0, 22, 1, 1),
-('7501055377022', 'Senzao Guarana', 32.0, 15, 1, 1)
+('7501055377022', 'Senzao Guarana', 32.0, 15, 1, 1),
 ('7501064103100', 'Corona Extra', 22.0, 12, 2, 5),
 ('7501049928742', 'Superior', 21.0, 23, 2, 6),
 ('7501049967062', 'Sol Clamato', 25.0, 15, 2, 6),
@@ -112,7 +112,7 @@ VALUES
 
 -- Tabla Venta
 CREATE TABLE IF NOT EXISTS Venta (
-  idVenta INT PRIMARY KEY,
+  idVenta INT AUTO_INCREMENT PRIMARY KEY,
   fecha_venta DATE,
   total DECIMAL(10,2),
   idEmpleado INT NOT NULL,
