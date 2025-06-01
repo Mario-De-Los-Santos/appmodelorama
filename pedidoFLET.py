@@ -1,13 +1,10 @@
 import flet as ft
 import mysql.connector
 from datetime import datetime
+from conexionmysql import conecta
 
 def pedido_view(page: ft.Page):
-    conn = mysql.connector.connect(
-        host="localhost", port="3310",
-        user="root", password="mario19",
-        database="modelorama"
-    )
+    conn = conecta()
     cursor = conn.cursor()
 
     id_proveedor = ft.TextField(label="ID Proveedor", width=150)

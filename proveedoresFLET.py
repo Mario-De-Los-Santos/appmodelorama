@@ -1,14 +1,9 @@
 import flet as ft
 import mysql.connector
+from conexionmysql import conecta
 
 def proveedores_view(page: ft.Page):
-    conn = mysql.connector.connect(
-        host="localhost",
-        port="3310",  
-        user="root",
-        password="mario19",
-        database="modelorama"
-    )
+    conn = conecta()
     cursor = conn.cursor()
 
     txt_id = ft.TextField(label="ID Proveedor", width=150)

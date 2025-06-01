@@ -1,14 +1,9 @@
 import flet as ft
 import mysql.connector
+from conexionmysql import conecta
 
 def categorias_view(page: ft.Page):
-    conn = mysql.connector.connect(
-        host="localhost",
-        port="3310",
-        user="root",
-        password="mario19",
-        database="modelorama"
-    )
+    conn = conecta()
     cursor = conn.cursor()
 
     id_categoria = ft.TextField(label="ID Categoría", width=150)

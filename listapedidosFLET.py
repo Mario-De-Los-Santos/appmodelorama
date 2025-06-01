@@ -1,6 +1,7 @@
 import flet as ft
 import mysql.connector
 from datetime import date
+from conexionmysql import conecta
 
 def listapedidos_view(page: ft.Page):
     page.title = "Consulta de Pedidos"
@@ -30,9 +31,7 @@ def listapedidos_view(page: ft.Page):
     contenedor_detalles = ft.Column(visible=False)
 
     def mostrar_detalles(id_pedido):
-        conn = mysql.connector.connect(
-            host="localhost", port="3310", user="root", password="mario19", database="modelorama"
-        )
+        conn = conecta()
         cursor = conn.cursor()
         tabla_detalles.rows.clear()
 

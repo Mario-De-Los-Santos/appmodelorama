@@ -1,8 +1,9 @@
 import flet as ft
 import mysql.connector
+from conexionmysql import conecta
 
 def producto_view(page: ft.Page):
-    conn = mysql.connector.connect(host="localhost", port="3310", user="root", password="mario19", database="modelorama")
+    conn = conecta()
     cursor = conn.cursor()
 
     codigo = ft.TextField(label="Código",max_length=13, width=130)
