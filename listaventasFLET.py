@@ -2,7 +2,6 @@ import flet as ft
 import mysql.connector
 from datetime import date
 
-
 def listaventas_view(page: ft.Page):
     page.title = "Consulta de Ventas"
 
@@ -10,7 +9,6 @@ def listaventas_view(page: ft.Page):
     filtro_id = ft.TextField(label="Buscar por ID de Venta", width=200)
     filtro_fecha = ft.TextField(label="Buscar por Fecha", width=200, read_only=True)
 
-    # DatePicker y su integración
     def actualizar_fecha(e):
         if date_picker.value:
             filtro_fecha.value = str(date_picker.value)
@@ -27,7 +25,6 @@ def listaventas_view(page: ft.Page):
     )
     page.overlay.append(date_picker)
 
-    # Tabla de resultados
     tabla_ventas = ft.DataTable(
         columns=[
             ft.DataColumn(ft.Text("ID Venta")),
@@ -40,15 +37,50 @@ def listaventas_view(page: ft.Page):
         rows=[]
     )
 
-    # Función para cargar datos desde la base
+    tabla_detalles = ft.DataTable(
+        columns=[
+            ft.DataColumn(ft.Text("Código")),
+            ft.DataColumn(ft.Text("Producto")),
+            ft.DataColumn(ft.Text("Cantidad")),
+            ft.DataColumn(ft.Text("Precio c/u"))  
+        ],
+        rows=[]
+    )
+
+    contenedor_detalles = ft.Column(visible=False)
+
+    def mostrar_detalles(id_venta):
+        conn = mysql.connector.connect(
+            host="localhost", port="3310", user="root", password="mario19", database="modelorama"
+        )
+        cursor = conn.cursor()
+        tabla_detalles.rows.clear()
+
+        cursor.execute("""
+            SELECT dv.codigo, p.nombre_producto, dv.cantidad, p.precio_producto
+            FROM detalles_venta dv
+            JOIN producto p ON dv.codigo = p.codigo
+            WHERE dv.idVenta = %s
+        """, (id_venta,))
+        for codigo, nombre, cantidad, precio in cursor.fetchall():
+            tabla_detalles.rows.append(
+                ft.DataRow(cells=[
+                    ft.DataCell(ft.Text(codigo)),
+                    ft.DataCell(ft.Text(nombre)),
+                    ft.DataCell(ft.Text(str(cantidad))),
+                    ft.DataCell(ft.Text(f"${precio:.2f}"))
+                ])
+            )
+
+        conn.close()
+        contenedor_detalles.visible = True
+        tabla_ventas.visible = False
+        page.update()
+
     def cargar_ventas(filtro_id_val="", filtro_fecha_val=""):
         tabla_ventas.rows.clear()
         conn = mysql.connector.connect(
-            host="localhost", 
-            port="3310", 
-            user="root", 
-            password="mario19", 
-            database="modelorama"
+            host="localhost", port="3310", user="root", password="mario19", database="modelorama"
         )
         cursor = conn.cursor()
 
@@ -67,14 +99,27 @@ def listaventas_view(page: ft.Page):
             query += " WHERE " + " AND ".join(condiciones)
 
         cursor.execute(query, valores)
+
         for fila in cursor.fetchall():
+            id_venta, fecha, total, id_empleado, tel_cliente, id_pago = fila
             tabla_ventas.rows.append(
-                ft.DataRow(cells=[ft.DataCell(ft.Text(str(col))) for col in fila])
+                ft.DataRow(
+                    cells=[
+                        ft.DataCell(ft.Text(str(id_venta))),
+                        ft.DataCell(ft.Text(str(fecha))),
+                        ft.DataCell(ft.Text(f"${total:.2f}")),
+                        ft.DataCell(ft.Text(str(id_empleado))),
+                        ft.DataCell(ft.Text(tel_cliente)),
+                        ft.DataCell(ft.Text(str(id_pago))),
+                    ],
+                    on_select_changed=lambda e, idv=id_venta: mostrar_detalles(idv)
+                )
             )
+
         conn.close()
         page.update()
 
-    # Acciones de botones
+    # Acciones de los botones
     def buscar(e):
         cargar_ventas(filtro_id.value, filtro_fecha.value)
 
@@ -83,7 +128,18 @@ def listaventas_view(page: ft.Page):
         filtro_fecha.value = ""
         cargar_ventas()
 
-    # Carga inicial sin filtros
+    def cerrar_detalles(e):
+        contenedor_detalles.visible = False
+        tabla_ventas.visible = True
+        page.update()
+
+    # Definición del contenedor de detalles
+    contenedor_detalles.controls = [
+        ft.Text("Detalles de Venta", size=20, weight="bold"),
+        tabla_detalles,
+        ft.ElevatedButton("Cerrar Detalles", on_click=cerrar_detalles)
+    ]
+
     cargar_ventas()
 
     return ft.Column([
@@ -98,5 +154,6 @@ def listaventas_view(page: ft.Page):
             ft.OutlinedButton("Limpiar", on_click=limpiar)
         ]),
         ft.Divider(),
-        tabla_ventas
+        tabla_ventas,
+        contenedor_detalles
     ])

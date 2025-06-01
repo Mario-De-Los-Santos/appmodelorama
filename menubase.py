@@ -8,6 +8,7 @@ from productoFLET import producto_view
 from ventaFLET import venta_view
 from pedidoFLET import pedido_view
 from listaventasFLET import listaventas_view
+from listapedidosFLET import listapedidos_view
 
 def main(page: ft.Page):
     page.title = "Modelorama"
@@ -27,6 +28,7 @@ def main(page: ft.Page):
             ft.Tab(text="Realizar Venta", content=venta_view(page)),
             ft.Tab(text="Lista de ventas", content=listaventas_view(page)),
             ft.Tab(text="Pedidos", content=pedido_view(page)),
+            ft.Tab(text="Lista de Pedidos", content=listapedidos_view(page)),
             ft.Tab(text="Producto", content=producto_view(page)),
             ft.Tab(text="Unidades", content=unidad_view(page))
         ]

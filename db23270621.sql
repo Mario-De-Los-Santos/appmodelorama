@@ -112,7 +112,7 @@ VALUES
 
 -- Tabla Venta
 CREATE TABLE IF NOT EXISTS Venta (
-  idVenta INT PRIMARY KEY,
+  idVenta INT AUTO_INCREMENT PRIMARY KEY,
   fecha_venta DATE,
   total DECIMAL(10,2),
   idEmpleado INT NOT NULL,
@@ -138,15 +138,21 @@ VALUES
 (2, 'Distribuidora Coca-Cola FEMSA','Libramiento Norte Pte 3435, 29020 Tuxtla Gtz, Chiapas', '5515195000'),
 (3, 'Grupo Bimbo', 'Libramiento Norte Pte esquina, C. Torreon No 1229, 29020 Teran, Chiapas', '9626995068');
 
--- Tabla Pedido
+-- Tabla Pedido 
 CREATE TABLE IF NOT EXISTS Pedido (
-  idPedido VARCHAR(45),
-  codigo CHAR(13),
+  idPedido INT AUTO_INCREMENT PRIMARY KEY,
   idProveedor INT,
-  cantidad INT,
-  PRIMARY KEY (idPedido, codigo, idProveedor),
-  FOREIGN KEY (codigo) REFERENCES Producto(codigo),
+  precio_total DECIMAL(10,2),
   FOREIGN KEY (idProveedor) REFERENCES Proveedor(idProveedor)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS detalles_pedido (
+  codigo CHAR(13),
+  idPedido INT,
+  cantidad INT,
+  PRIMARY KEY (codigo, idPedido),
+  FOREIGN KEY (codigo) REFERENCES Producto(codigo),
+  FOREIGN KEY (idPedido) REFERENCES Pedido(idPedido)
 ) ENGINE=InnoDB;
 
 -- Tabla Detalles de Venta
