@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS Cliente (
 -- Insertar Registros en Cliente
 INSERT INTO Cliente (telefono, nombre_cliente, RFC)
 VALUES
+('9999999999', 'Cliente General', 'CLIENTEGRAL99'),
 ('9612659585', 'Mario De Los Santos', 'F2438689D341W'),
 ('9611234567', 'Dorian Marroquin', 'DOA12127Y4JS2');
 
